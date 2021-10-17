@@ -18,19 +18,17 @@ async function rollDeathSavePatch(wrapper, options, ...rest) {
   return result;
 }
 
+/**
+ * A hook event that fires after an Actor rolls a Ability Save
+ * @param {Actor5e} actor       The Actor that rolled the death save
+ * @param {D20Roll} result           The Result of the death save
+ * @param {object} options      Options which configured how the death save was rolled
+ */
 export async function rollDeathSave(actorUuid, result, cleanedOptions) {
   const actorOrToken = await fromUuid(actorUuid);
   const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
 
   const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
 
-  /**
-   * A hook event that fires after an Actor rolls a Ability Save
-   * @function Actor5e.rollDeathSave
-   * @memberof actorHooks
-   * @param {Actor5e} actor       The Actor that rolled the death save
-   * @param {D20Roll} result           The Result of the death save
-   * @param {object} options      Options which configured how the death save was rolled
-   */
   Hooks.callAll('Actor5e.rollDeathSave', actor, resultRoll, cleanedOptions);
 }

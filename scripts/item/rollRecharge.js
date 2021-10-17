@@ -18,6 +18,13 @@ async function rollRechargePatch(wrapped, ...args) {
   return result;
 }
 
+/**
+ * Occurs after an Item's Recharge attempt is rolled
+ * @param {Item5e} item       The Item being recharged
+ * @param {Roll} result       The result of the d6 roll
+ * @param {boolean} success       Was the recharge a success?
+ * @param {Actor5e} [actor]       The Actor that owns the item
+ */
 export async function rollRecharge(itemUuid, result, success, actorUuid) {
   const item = await fromUuid(itemUuid);
 
@@ -25,14 +32,5 @@ export async function rollRecharge(itemUuid, result, success, actorUuid) {
   const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
 
   const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
-  /**
-   * Occurs after an Item's Recharge attempt is rolled
-   * @function Item5e.rollRecharge
-   * @memberof itemHooks
-   * @param {Item5e} item       The Item being recharged
-   * @param {Roll} result       The result of the d6 roll
-   * @param {boolean} success       Was the recharge a success?
-   * @param {Actor5e} [actor]       The Actor that owns the item
-   */
   Hooks.callAll('Item5e.rollRecharge', item, resultRoll, success, actor);
 }

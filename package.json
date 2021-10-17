@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "more-hooks-5e",
+  "version": "0.1.0",
+  "description": "A library module which adds more Hooks for events in the 5e system.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-devMode"
+  },
+  "bugs": {
+    "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-devMode/issues"
+  },
+  "scripts": {
+    "docs": "jsdoc2md scripts/**/*.js > api.md --heading-depth 3"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^7.1.0"
+  },
+  "dependencies": {}
+}

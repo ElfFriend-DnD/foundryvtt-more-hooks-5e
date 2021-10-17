@@ -18,6 +18,13 @@ async function rollToolCheckPatch(wrapper, options, ...rest) {
   return result;
 }
 
+/**
+ * A hook event that fires after an Item rolls a Tool Check
+ * @param {Item5e} item       The Item that rolls the Tool Check
+ * @param {D20Roll} result           The Result of the Tool Check Roll
+ * @param {object} [options]      Roll options which were provided to the d20Roll function
+ * @param {Actor5e} [actor]       The Actor that owns the item
+ */
 export async function rollToolCheck(itemUuid, result, cleanedConfig, actorUuid) {
 
   const item = await fromUuid(itemUuid);
@@ -26,14 +33,5 @@ export async function rollToolCheck(itemUuid, result, cleanedConfig, actorUuid) 
   const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
 
   const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
-  /**
-   * A hook event that fires after an Item rolls a Tool Check
-   * @function Item5e.rollDamage
-   * @memberof itemHooks
-   * @param {Item5e} item       The Item that rolls the Tool Check
-   * @param {D20Roll} result           The Result of the Tool Check Roll
-   * @param {object} [options]      Roll options which were provided to the d20Roll function
-   * @param {Actor5e} [actor]       The Actor that owns the item
-   */
   Hooks.callAll('Item5e.rollToolCheck', item, resultRoll, cleanedConfig, actor);
 }
