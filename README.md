@@ -1,8 +1,19 @@
 # More Hooks D&D5e
 
-Adds hooks to the 5e system. This is intended to be a library module for other modules (or Hook Macro users) to leverage.
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FElfFriend-DnD%2Ffoundryvtt-more-hooks-5e%2Fmain%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
+![Latest Release Download Count](https://img.shields.io/badge/dynamic/json?label=Downloads@latest&query=assets%5B1%5D.download_count&url=https%3A%2F%2Fapi.github.com%2Frepos%2FElfFriend-DnD%2Ffoundryvtt-more-hooks-5e%2Freleases%2Flatest)
+![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fmore-hooks-5e&colorB=4aa94a)
+[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fmore-hooks-5e%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/more-hooks-5e/)
+[![Foundry Hub Comments](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fmore-hooks-5e%2Fshield%2Fcomments)](https://www.foundryvtt-hub.com/package/more-hooks-5e/)
+
+[![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coke-%23FF5E5B)](https://ko-fi.com/elffriend)
+[![patreon](https://img.shields.io/badge/-patreon-%23FF424D)](https://www.patreon.com/ElfFriend_DnD)
+
+Adds more [hooks](https://foundryvtt.wiki/en/development/guides/Hooks_Listening_Calling) to the 5e system. This is intended to be a library module for other modules (or Hook Macro users) to leverage.
 
 Its goal is to eventually contribute these hooks directly to the core 5e system and disappear. The API is going to follow Semantic Versioning as it is likely to undergo sizable changes as the hooks are hammered out.
+
+> LPT: Use `CONFIG.debug.hooks = true` or [Developer Mode](https://github.com/League-of-Foundry-Developers/foundryvtt-devMode) to more easily explore what a hook does and when it fires.
 
 ## Hooks
 
@@ -11,8 +22,6 @@ Its goal is to eventually contribute these hooks directly to the core 5e system 
 #### Actor5e.rollAbilitySave(actor, result, abilityId, options)
 
 A hook event that fires after an Actor rolls a Ability Save
-
-**Kind**: global function  
 
 | Param     | Type                 | Description                                              |
 | --------- | -------------------- | -------------------------------------------------------- |
@@ -25,8 +34,6 @@ A hook event that fires after an Actor rolls a Ability Save
 
 A hook event that fires after an Actor rolls a Ability Test
 
-**Kind**: global function  
-
 | Param     | Type                 | Description                                              |
 | --------- | -------------------- | -------------------------------------------------------- |
 | actor     | <code>Actor5e</code> | The Actor that rolled the ability test                   |
@@ -38,8 +45,6 @@ A hook event that fires after an Actor rolls a Ability Test
 
 A hook event that fires after an Actor rolls a Ability Save
 
-**Kind**: global function  
-
 | Param   | Type                 | Description                                            |
 | ------- | -------------------- | ------------------------------------------------------ |
 | actor   | <code>Actor5e</code> | The Actor that rolled the death save                   |
@@ -49,8 +54,6 @@ A hook event that fires after an Actor rolls a Ability Save
 #### Actor5e.rollSkill(actor, result, skillId, options)
 
 A hook event that fires after an Actor rolls a Skill Check
-
-**Kind**: global function  
 
 | Param   | Type                 | Description                                             |
 | ------- | -------------------- | ------------------------------------------------------- |
@@ -65,8 +68,6 @@ A hook event that fires after an Actor rolls a Skill Check
 
 A hook event that fires after an Item is rolled
 
-**Kind**: global function  
-
 | Param                     | Type                                            | Description                                                                   |
 | ------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------- |
 | item                      | <code>Item5e</code>                             | The Item being rolled                                                         |
@@ -80,8 +81,6 @@ A hook event that fires after an Item is rolled
 
 A hook event that fires after an Item rolls an Attack Roll
 
-**Kind**: global function  
-
 | Param     | Type                 | Description                                              |
 | --------- | -------------------- | -------------------------------------------------------- |
 | item      | <code>Item5e</code>  | The Item that rolls the Attack Roll                      |
@@ -92,8 +91,6 @@ A hook event that fires after an Item rolls an Attack Roll
 #### Item5e.rollDamage(item, result, [config], [actor])
 
 A hook event that fires after an Item rolls a Damage Roll
-
-**Kind**: global function  
 
 | Param               | Type                    | Description                                                      |
 | ------------------- | ----------------------- | ---------------------------------------------------------------- |
@@ -111,8 +108,6 @@ A hook event that fires after an Item rolls a Damage Roll
 
 A hook event that fires after an Item's "Other Formula" is rolled
 
-**Kind**: global function  
-
 | Param                | Type                 | Description                                                                   |
 | -------------------- | -------------------- | ----------------------------------------------------------------------------- |
 | item                 | <code>Item5e</code>  | The Item being rolled                                                         |
@@ -124,8 +119,6 @@ A hook event that fires after an Item's "Other Formula" is rolled
 
 Occurs after an Item's Recharge attempt is rolled
 
-**Kind**: global function  
-
 | Param   | Type                 | Description                  |
 | ------- | -------------------- | ---------------------------- |
 | item    | <code>Item5e</code>  | The Item being recharged     |
@@ -136,8 +129,6 @@ Occurs after an Item's Recharge attempt is rolled
 #### Item5e.rollToolCheck(item, result, [options], [actor])
 
 A hook event that fires after an Item rolls a Tool Check
-
-**Kind**: global function  
 
 | Param     | Type                 | Description                                              |
 | --------- | -------------------- | -------------------------------------------------------- |
