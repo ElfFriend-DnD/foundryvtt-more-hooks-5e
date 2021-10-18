@@ -32,7 +32,7 @@ export async function rollFormula(itemUuid, result, cleanedConfig, actorUuid, co
   const actorOrToken = await fromUuid(actorUuid);
   const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
 
-  const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
+  const resultRoll = Roll.fromData(result);
 
   Hooks.callAll('Item5e.rollFormula', item, resultRoll, cleanedConfig, actor, commonArgs);
 }
