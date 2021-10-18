@@ -1,6 +1,6 @@
 import { MODULE_NAME } from "../const.js";
 import { socket } from '../../setup.js';
-import { prepareOptions } from "../utils.js";
+import { prepareOptions, getCommonArguments } from "../utils.js";
 
 export function patchRoll() {
   libWrapper.register(MODULE_NAME, "CONFIG.Item.documentClass.prototype.roll", rollPatch, "WRAPPER");
@@ -13,7 +13,7 @@ async function rollPatch(wrapper, options, ...rest) {
   const actorUuid = this.actor?.uuid;
   const cleanedOptions = prepareOptions(options);
 
-  socket.executeForEveryone(roll, itemUuid, chatMessage, cleanedOptions, actorUuid);
+  socket.executeForEveryone(roll, itemUuid, chatMessage, cleanedOptions, actorUuid, getCommonArguments());
 
   return chatMessage;
 }
@@ -26,12 +26,13 @@ async function rollPatch(wrapper, options, ...rest) {
  * @param {boolean} [options.configureDialog]     Display a configuration dialog for the item roll, if applicable?
  * @param {string} [options.rollMode]             The roll display mode with which to display (or not) the card
  * @param {boolean} [options.createMessage]       Whether to automatically create a chat message (if true) or simply return
+ * @param {CommonArguments} commonArgs   A set of common arguments for utility
  */
-export async function roll(itemUuid, chatMessage, options, actorUuid) {
+export async function roll(itemUuid, chatMessage, options, actorUuid, commonArgs) {
   const item = await fromUuid(itemUuid);
 
   const actorOrToken = await fromUuid(actorUuid);
   const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
 
-  Hooks.callAll('Item5e.roll', item, chatMessage, options, actor);
+  Hooks.callAll('Item5e.roll', item, chatMessage, options, actor, commonArgs);
 }

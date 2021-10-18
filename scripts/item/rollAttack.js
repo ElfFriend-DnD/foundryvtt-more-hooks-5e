@@ -1,6 +1,6 @@
 import { MODULE_NAME } from "../const.js";
 import { socket } from '../../setup.js';
-import { prepareOptions } from "../utils.js";
+import { prepareOptions, getCommonArguments } from "../utils.js";
 
 export function patchRollAttack() {
   libWrapper.register(MODULE_NAME, 'CONFIG.Item.documentClass.prototype.rollAttack', rollAttackPatch, "WRAPPER");
@@ -13,7 +13,7 @@ async function rollAttackPatch(wrapper, options, ...rest) {
   const actorUuid = this.actor?.uuid;
   const cleanedOptions = prepareOptions(options);
 
-  socket.executeForEveryone(rollAttack, itemUuid, result, cleanedOptions, actorUuid);
+  socket.executeForEveryone(rollAttack, itemUuid, result, cleanedOptions, actorUuid, getCommonArguments());
 
   return result;
 }
@@ -24,8 +24,9 @@ async function rollAttackPatch(wrapper, options, ...rest) {
  * @param {D20Roll} result           The Result of the Attack Roll
  * @param {object} [options]      Roll options which were provided to the d20Roll function
  * @param {Actor5e} [actor]       The Actor that owns the item
+ * @param {CommonArguments} commonArgs   A set of common arguments for utility
  */
-export async function rollAttack(itemUuid, result, cleanedOptions, actorUuid) {
+export async function rollAttack(itemUuid, result, cleanedOptions, actorUuid, commonArgs) {
   const item = await fromUuid(itemUuid);
 
   const actorOrToken = await fromUuid(actorUuid);
@@ -33,5 +34,5 @@ export async function rollAttack(itemUuid, result, cleanedOptions, actorUuid) {
 
   const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
 
-  Hooks.callAll('Item5e.rollAttack', item, resultRoll, cleanedOptions, actor);
+  Hooks.callAll('Item5e.rollAttack', item, resultRoll, cleanedOptions, actor, commonArgs);
 }

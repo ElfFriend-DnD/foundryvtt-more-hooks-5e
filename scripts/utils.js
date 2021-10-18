@@ -24,3 +24,19 @@ export function prepareOptions(options) {
 
   return options;
 }
+
+/**
+ * Some common arguments passed to all hooks.
+ * @typedef {object} CommonArguments
+ * @property {string} userId - The user who initiated the action that triggered the hook
+ */
+
+/**
+ * Gets the common arguments for all hooks. Called during the socket emit.
+ * @returns {CommonArguments}
+ */
+export function getCommonArguments() {
+  return {
+    userId: game.user.id
+  }
+}

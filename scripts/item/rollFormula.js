@@ -1,6 +1,6 @@
 import { MODULE_NAME } from "../const.js";
 import { socket } from '../../setup.js';
-import { prepareOptions } from "../utils.js";
+import { prepareOptions, getCommonArguments } from "../utils.js";
 
 export function patchRollFormula() {
   libWrapper.register(MODULE_NAME, "CONFIG.Item.documentClass.prototype.rollFormula", rollFormulaPatch, "WRAPPER");
@@ -13,7 +13,7 @@ async function rollFormulaPatch(wrapper, config, ...rest) {
   const actorUuid = this.actor?.uuid;
   const cleanedConfig = prepareOptions(config);
 
-  socket.executeForEveryone(rollFormula, itemUuid, result, cleanedConfig, actorUuid);
+  socket.executeForEveryone(rollFormula, itemUuid, result, cleanedConfig, actorUuid, getCommonArguments());
 
   return result;
 }
@@ -24,8 +24,9 @@ async function rollFormulaPatch(wrapper, config, ...rest) {
  * @param {Roll} result       The created ChatMessage or ChatMessageData depending on options.createMessage
  * @param {object} [options]
  * @param {boolean} [options.spellLevel]  Level at which a spell is cast.
+ * @param {CommonArguments} commonArgs   A set of common arguments for utility
  */
-export async function rollFormula(itemUuid, result, cleanedConfig, actorUuid) {
+export async function rollFormula(itemUuid, result, cleanedConfig, actorUuid, commonArgs) {
   const item = await fromUuid(itemUuid);
 
   const actorOrToken = await fromUuid(actorUuid);
@@ -33,5 +34,5 @@ export async function rollFormula(itemUuid, result, cleanedConfig, actorUuid) {
 
   const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
 
-  Hooks.callAll('Item5e.rollFormula', item, resultRoll, cleanedConfig, actor);
+  Hooks.callAll('Item5e.rollFormula', item, resultRoll, cleanedConfig, actor, commonArgs);
 }
