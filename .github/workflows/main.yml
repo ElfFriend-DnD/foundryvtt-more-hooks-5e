@@ -44,7 +44,7 @@ jobs:
         tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
 
-    Publish this new version to the Foundry VTT Module Listing
+    # Publish this new version to the Foundry VTT Module Listing
     - name: FoundryVTT AutoPublish
       uses: Varriount/fvtt-autopublish@v1.0.2a
       with:
