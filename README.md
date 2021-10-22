@@ -17,17 +17,6 @@ Its goal is to eventually contribute these hooks directly to the core 5e system 
 
 ## API
 
-### Type Definitions
-#### CommonArguments
-Some common arguments passed to all hooks.
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| userId | <code>string</code> | The user who initiated the action that triggered the hook |
-
-
 ### Actors
 
 #### Actor5e.rollAbilitySave(actor, result, abilityId, options)
@@ -40,7 +29,6 @@ A hook event that fires after an Actor rolls a Ability Save
 | result    | <code>D20Roll</code> | The Result of the ability save                           |
 | abilityId | <code>string</code>  | The ability id (e.g. "str")                              |
 | options   | <code>object</code>  | Options which configured how the ability save was rolled |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Actor5e.rollAbilityTest(actor, result, abilityId, options)
 
@@ -52,7 +40,6 @@ A hook event that fires after an Actor rolls a Ability Test
 | result    | <code>D20Roll</code> | The Result of the ability test                           |
 | abilityId | <code>string</code>  | The ability id (e.g. "str")                              |
 | options   | <code>object</code>  | Options which configured how the ability test was rolled |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Actor5e.rollDeathSave(actor, result, options)
 
@@ -63,7 +50,6 @@ A hook event that fires after an Actor rolls a Ability Save
 | actor   | <code>Actor5e</code> | The Actor that rolled the death save                   |
 | result  | <code>D20Roll</code> | The Result of the death save                           |
 | options | <code>object</code>  | Options which configured how the death save was rolled |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Actor5e.rollSkill(actor, result, skillId, options)
 
@@ -75,7 +61,6 @@ A hook event that fires after an Actor rolls a Skill Check
 | result  | <code>D20Roll</code> | The Result of the skill check                           |
 | skillId | <code>string</code>  | The skill id (e.g. "ins")                               |
 | options | <code>object</code>  | Options which configured how the skill check was rolled |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 ### Items
 
@@ -91,7 +76,6 @@ A hook event that fires after an Item is rolled
 | [options.configureDialog] | <code>boolean</code>                            | Display a configuration dialog for the item roll, if applicable?              |
 | [options.rollMode]        | <code>string</code>                             | The roll display mode with which to display (or not) the card                 |
 | [options.createMessage]   | <code>boolean</code>                            | Whether to automatically create a chat message (if true) or simply return     |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Item5e.rollAttack(item, result, [options], [actor])
 
@@ -103,7 +87,6 @@ A hook event that fires after an Item rolls an Attack Roll
 | result    | <code>D20Roll</code> | The Result of the Attack Roll                            |
 | [options] | <code>object</code>  | Roll options which were provided to the d20Roll function |
 | [actor]   | <code>Actor5e</code> | The Actor that owns the item                             |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Item5e.rollDamage(item, result, [config], [actor])
 
@@ -120,7 +103,6 @@ A hook event that fires after an Item rolls a Damage Roll
 | [config.versatile]  | <code>boolean</code>    | If the item is a weapon, roll damage using the versatile formula |
 | [config.options]    | <code>object</code>     | Additional options passed to the damageRoll function             |
 | [actor]             | <code>Actor5e</code>    | The Actor that owns the item                                     |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Item5e.rollFormula(item, result, [options])
 
@@ -132,7 +114,6 @@ A hook event that fires after an Item's "Other Formula" is rolled
 | result               | <code>Roll</code>    | The created ChatMessage or ChatMessageData depending on options.createMessage |
 | [options]            | <code>object</code>  |                                                                               |
 | [options.spellLevel] | <code>boolean</code> | Level at which a spell is cast.                                               |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Item5e.rollRecharge(item, result, success, [actor])
 
@@ -144,7 +125,6 @@ Occurs after an Item's Recharge attempt is rolled
 | result  | <code>Roll</code>    | The result of the d6 roll    |
 | success | <code>boolean</code> | Was the recharge a success?  |
 | [actor] | <code>Actor5e</code> | The Actor that owns the item |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |
 
 #### Item5e.rollToolCheck(item, result, [options], [actor])
 
@@ -156,4 +136,3 @@ A hook event that fires after an Item rolls a Tool Check
 | result    | <code>D20Roll</code> | The Result of the Tool Check Roll                        |
 | [options] | <code>object</code>  | Roll options which were provided to the d20Roll function |
 | [actor]   | <code>Actor5e</code> | The Actor that owns the item                             |
-| commonArgs | [<code>CommonArguments</code>](#commonarguments) | A set of common arguments for utility |

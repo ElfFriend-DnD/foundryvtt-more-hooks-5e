@@ -1,7 +1,5 @@
 
 import { MODULE_NAME } from "../const.js";
-import { socket } from '../../setup.js';
-import { prepareOptions, getCommonArguments } from "../utils.js";
 
 export function patchRollAbilityTest() {
   libWrapper.register(MODULE_NAME, 'CONFIG.Actor.documentClass.prototype.rollAbilityTest', rollAbilityTestPatch, "WRAPPER");
@@ -10,10 +8,9 @@ export function patchRollAbilityTest() {
 async function rollAbilityTestPatch(wrapper, abilityId, options, ...rest) {
   const result = await wrapper(abilityId, options, ...rest);
 
-  const actorUuid = this.uuid;
-  const cleanedOptions = prepareOptions(options);
+  const actor = this;
 
-  socket.executeForEveryone(rollAbilityTest, actorUuid, result, abilityId, cleanedOptions, getCommonArguments());
+  Hooks.callAll('Actor5e.rollAbilityTest', actor, result, abilityId, options);
 
   return result;
 }
@@ -24,13 +21,5 @@ async function rollAbilityTestPatch(wrapper, abilityId, options, ...rest) {
  * @param {D20Roll} result           The Result of the ability test
  * @param {string} abilityId      The ability id (e.g. "str")
  * @param {object} options      Options which configured how the ability test was rolled
- * @param {CommonArguments} commonArgs   A set of common arguments for utility
  */
-export async function rollAbilityTest(actorUuid, result, abilityId, cleanedOptions, commonArgs) {
-  const actorOrToken = await fromUuid(actorUuid);
-  const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
-
-  const resultRoll = game.dnd5e.dice.D20Roll.fromData(result);
-
-  Hooks.callAll('Actor5e.rollAbilityTest', actor, resultRoll, abilityId, cleanedOptions, commonArgs);
-}
+export async function rollAbilityTest() { }
