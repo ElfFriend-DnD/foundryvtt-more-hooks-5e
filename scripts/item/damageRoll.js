@@ -1,6 +1,4 @@
 import { MODULE_NAME } from "../const.js";
-import { socket } from '../../setup.js';
-import { prepareOptions, getCommonArguments } from "../utils.js";
 
 export function patchRollDamage() {
   libWrapper.register(MODULE_NAME, 'CONFIG.Item.documentClass.prototype.rollDamage', rollDamagePatch, "WRAPPER");
@@ -9,11 +7,10 @@ export function patchRollDamage() {
 async function rollDamagePatch(wrapper, config, ...rest) {
   const result = await wrapper(config, ...rest);
 
-  const itemUuid = this.uuid;
-  const actorUuid = this.actor?.uuid;
-  const cleanedConfig = prepareOptions(config);
+  const item = this;
+  const actor = this.actor;
 
-  socket.executeForEveryone(rollDamage, itemUuid, result, cleanedConfig, actorUuid, getCommonArguments());
+  Hooks.callAll('Item5e.rollDamage', item, result, config, actor);
 
   return result;
 }
@@ -29,16 +26,5 @@ async function rollDamagePatch(wrapper, config, ...rest) {
  * @param {boolean} [config.versatile]   If the item is a weapon, roll damage using the versatile formula
  * @param {object} [config.options]      Additional options passed to the damageRoll function
  * @param {Actor5e} [actor]       The Actor that owns the item
- * @param {CommonArguments} commonArgs   A set of common arguments for utility
  */
-export async function rollDamage(itemUuid, result, cleanedConfig, actorUuid, commonArgs) {
-
-  const item = await fromUuid(itemUuid);
-
-  const actorOrToken = await fromUuid(actorUuid);
-  const actor = actorOrToken instanceof TokenDocument ? actorOrToken.actor : actorOrToken;
-
-  const resultRoll = game.dnd5e.dice.DamageRoll.fromData(result);
-
-  Hooks.callAll('Item5e.rollDamage', item, resultRoll, cleanedConfig, actor, commonArgs);
-}
+function rollDamage() {}

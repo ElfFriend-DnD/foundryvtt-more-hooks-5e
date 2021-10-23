@@ -2,7 +2,7 @@
   "name": "more-hooks-5e",
   "title": "More Hooks D&D5e",
   "description": "A library module which adds more Hooks for events in the 5e system.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Andrew Krigline",
   "authors": [
     {
@@ -19,14 +19,10 @@
   ],
   "dependencies": [
     {
-      "name": "socketlib"
-    },
-    {
       "name": "lib-wrapper"
     }
   ],
   "library": true,
-  "socket": true,
   "minimumCoreVersion": "0.8.9",
   "compatibleCoreVersion": "0.8.9",
   "url": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e",
