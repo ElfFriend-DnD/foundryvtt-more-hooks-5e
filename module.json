@@ -2,7 +2,7 @@
   "name": "more-hooks-5e",
   "title": "More Hooks D&D5e",
   "description": "A library module which adds more Hooks for events in the 5e system.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Andrew Krigline",
   "authors": [
     {
