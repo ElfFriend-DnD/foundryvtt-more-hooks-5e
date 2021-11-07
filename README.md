@@ -64,6 +64,19 @@ A hook event that fires after an Actor rolls a Skill Check
 
 ### Items
 
+#### Item5e.displayCard(item, chatMessage, [options])
+
+A hook event that fires after an Item Roll's chat message is created
+
+| Param                     | Type                                            | Description                                                                   |
+| ------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------- |
+| item                      | <code>Item5e</code>                             | The Item being rolled                                                         |
+| chatMessage               | <code>ChatMessage</code> \| <code>object</code> | The created ChatMessage or ChatMessageData depending on options.createMessage |
+| [options]                 | <code>object</code>                             |                                                                               |
+| [options.rollMode]        | <code>string</code>                             | The roll display mode with which to display (or not) the card                 |
+| [options.createMessage]   | <code>boolean</code>                            | Whether to automatically create a ChatMessage document (if true), or only return the prepared message data (if false)     |
+| [actor]   | <code>Actor5e</code> | The Actor that owns the item                             |
+
 #### Item5e.roll(item, chatMessage, [options])
 
 A hook event that fires after an Item is rolled
@@ -75,7 +88,8 @@ A hook event that fires after an Item is rolled
 | [options]                 | <code>object</code>                             |                                                                               |
 | [options.configureDialog] | <code>boolean</code>                            | Display a configuration dialog for the item roll, if applicable?              |
 | [options.rollMode]        | <code>string</code>                             | The roll display mode with which to display (or not) the card                 |
-| [options.createMessage]   | <code>boolean</code>                            | Whether to automatically create a chat message (if true) or simply return     |
+| [options.createMessage]   | <code>boolean</code>                            | Whether to automatically create a ChatMessage document (if true), or only return the prepared message data (if false)     |
+| [actor]   | <code>Actor5e</code> | The Actor that owns the item                             |
 
 #### Item5e.rollAttack(item, result, [options], [actor])
 

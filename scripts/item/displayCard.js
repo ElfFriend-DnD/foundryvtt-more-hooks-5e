@@ -16,7 +16,7 @@ async function displayCardPatch(wrapper, options, ...rest) {
 }
 
 /**
- * A hook event that fires after an Item is rolled
+ * A hook event that fires after an Item Roll's chat message is created
  * @param {Item5e} item       The Item being rolled
  * @param {ChatMessage|object} chatMessage       The created ChatMessage or ChatMessageData depending on options.createMessage
  * @param {object} [options]
