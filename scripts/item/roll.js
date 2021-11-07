@@ -22,6 +22,7 @@ async function rollPatch(wrapper, options, ...rest) {
  * @param {object} [options]
  * @param {boolean} [options.configureDialog]     Display a configuration dialog for the item roll, if applicable?
  * @param {string} [options.rollMode]             The roll display mode with which to display (or not) the card
- * @param {boolean} [options.createMessage]       Whether to automatically create a chat message (if true) or simply return
+ * @param {boolean} [options.createMessage]       Whether to automatically create a ChatMessage document (if true), or only return the prepared message data (if false)
+ * @param {Actor5e} [actor]       The Actor that owns the item
  */
 function roll() { }  
