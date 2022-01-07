@@ -7,6 +7,8 @@ export function patchRollAttack() {
 async function rollAttackPatch(wrapper, options, ...rest) {
   const result = await wrapper(options, ...rest);
 
+  if (!result) return result;
+
   const item = this;
   const actor = this.actor;
 
