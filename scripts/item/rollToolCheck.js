@@ -6,6 +6,8 @@ export function patchRollToolCheck() {
 async function rollToolCheckPatch(wrapper, options, ...rest) {
   const result = await wrapper(options, ...rest);
 
+  if (!result) return result;
+
   const item = this;
   const actor = this.actor;
 

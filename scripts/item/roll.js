@@ -7,6 +7,8 @@ export function patchRoll() {
 async function rollPatch(wrapper, options, ...rest) {
   const chatMessage = await wrapper(options, ...rest);
 
+  if (!chatMessage) return chatMessage;
+
   const item = this;
   const actor = this.actor;
 

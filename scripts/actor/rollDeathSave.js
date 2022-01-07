@@ -7,6 +7,8 @@ export function patchRollDeathSave() {
 async function rollDeathSavePatch(wrapper, options, ...rest) {
   const result = await wrapper(options, ...rest);
 
+  if (!result) return result;
+
   const actor = this;
 
   Hooks.callAll('Actor5e.rollDeathSave', actor, result, options);

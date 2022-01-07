@@ -7,6 +7,8 @@ export function patchRollAbilitySave() {
 async function rollAbilitySavePatch(wrapper, abilityId, options, ...rest) {
   const result = await wrapper(abilityId, options, ...rest);
 
+  if (!result) return result;
+
   const actor = this;
 
   Hooks.callAll('Actor5e.rollAbilitySave', actor, result, abilityId, options);
