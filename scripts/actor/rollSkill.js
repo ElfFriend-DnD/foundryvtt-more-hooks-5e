@@ -7,6 +7,8 @@ export function patchRollSkill() {
 async function rollSkillPatch(wrapper, skillId, options, ...rest) {
   const result = await wrapper(skillId, options, ...rest);
 
+  if (!result) return result;
+
   const actor = this;
 
   Hooks.callAll('Actor5e.rollSkill', actor, result, skillId, options);

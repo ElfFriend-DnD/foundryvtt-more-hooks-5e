@@ -8,6 +8,8 @@ export function patchRollAbilityTest() {
 async function rollAbilityTestPatch(wrapper, abilityId, options, ...rest) {
   const result = await wrapper(abilityId, options, ...rest);
 
+  if (!result) return result;
+
   const actor = this;
 
   Hooks.callAll('Actor5e.rollAbilityTest', actor, result, abilityId, options);

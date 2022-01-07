@@ -6,6 +6,8 @@ export function patchRollRecharge() {
 async function rollRechargePatch(wrapped, ...args) {
   const result = await wrapped(...args);
 
+  if (!result) return result;
+
   const item = this;
   const actor = this.actor;
 

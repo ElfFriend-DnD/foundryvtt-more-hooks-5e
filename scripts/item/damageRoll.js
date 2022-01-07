@@ -7,6 +7,8 @@ export function patchRollDamage() {
 async function rollDamagePatch(wrapper, config, ...rest) {
   const result = await wrapper(config, ...rest);
 
+  if (!result) return result;
+
   const item = this;
   const actor = this.actor;
 
