@@ -24,7 +24,7 @@
   ],
   "library": true,
   "minimumCoreVersion": "0.8.9",
-  "compatibleCoreVersion": "0.8.9",
+  "compatibleCoreVersion": "9",
   "url": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e",
   "bugs": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e/issues",
   "changelog": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e/releases",
