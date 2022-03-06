@@ -19,6 +19,17 @@ Its goal is to eventually contribute these hooks directly to the core 5e system 
 
 ### Actors
 
+#### Actor5e.applyDamage(actor, totalDamageTaken, prevHp, newHp)
+
+A hook event that fires after an Actor takes damage. Note this only fires when the `applyDamage` method is called, not when the actor's HP is updated manually.
+
+| Param     | Type                 | Description                                              |
+| --------- | -------------------- | -------------------------------------------------------- |
+| actor     | <code>Actor5e</code> | The Actor that took the damage                   |
+| totalDamageTaken    | <code>number</code> | The total amount of damage the actor took                           |
+| prevHp | <code>object</code>  | The hp attribute for the actor before taking damage.                              |
+| newHp   | <code>object</code>  | The hp attribute of the Actor after taking damage. |
+
 #### Actor5e.rollAbilitySave(actor, result, abilityId, options)
 
 A hook event that fires after an Actor rolls a Ability Save
