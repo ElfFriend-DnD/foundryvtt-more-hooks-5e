@@ -25,7 +25,7 @@ async function applyDamagePatch(wrapper, amount, multiplier, ...rest) {
 }
 
 /**
- * A hook event that fires after an Actor rolls a Skill Check
+ * A hook event that fires after an Actor takes damage. Note this only fires when the `applyDamage` method is called, not when the actor's HP is updated manually.
  * @param {Actor5e} actor       The Actor that took the damage
  * @param {number} totalDamageTaken           The total amount of damage the actor took
  * @param {object} prevHp           The hp attribute of the Actor before taking damage

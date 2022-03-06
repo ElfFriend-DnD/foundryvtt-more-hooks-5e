@@ -1,4 +1,4 @@
-import { patchApplyDamage } from "./scripts/actor/damageTaken.js";
+import { patchApplyDamage } from "./scripts/actor/applyDamage.js";
 import { patchRollAbilitySave } from './scripts/actor/rollAbilitySave.js';
 import { patchRollAbilityTest } from './scripts/actor/rollAbilityTest.js';
 import { patchRollDeathSave } from './scripts/actor/rollDeathSave.js';
