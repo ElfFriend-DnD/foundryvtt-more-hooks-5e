@@ -31,21 +31,6 @@ export function jankyPatchDisplayCard() {
   }
 }
 
-// export function patchDisplayCard() {
-//   libWrapper.register(MODULE_NAME, "CONFIG.Item.documentClass.prototype.displayCard", displayCardPatch, "WRAPPER");
-// }
-
-// async function displayCardPatch(wrapper, options, ...rest) {
-//   const chatMessage = await wrapper(options, ...rest);
-
-//   const item = this;
-//   const actor = this.actor;
-
-//   Hooks.callAll('Item5e.displayCard', item, chatMessage, options, actor);
-
-//   return chatMessage;
-// }
-
 /**
  * A hook event that fires before an Item Roll's chat message is created
  * @param {Item5e} item       The Item being rolled
