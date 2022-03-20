@@ -9,7 +9,6 @@ const rollConfig = {
   parts,
   data: foundry.utils.deepClone(this.data.data),
   title,
-  flavor,
   allowCritical: false,
   fastForward: !dialog,
   dialogOptions: {width: 350},
@@ -19,13 +18,13 @@ const rollConfig = {
   }
 };
 
-if (this instanceof CONFIG.Actor.documentClass && !!rollData) {
-  const allowed = Hooks.call('Actor5e.preRollHitDie', this, rollData);
+if (this instanceof CONFIG.Actor.documentClass && !!rollConfig) {
+  const allowed = Hooks.call('Actor5e.preRollHitDie', this, rollConfig);
   if ( allowed === false ) return this;
 }
 
 // Call the roll helper utility
-const roll = await game.dnd5e.dice.damageRoll(rollData);
+const roll = await game.dnd5e.dice.damageRoll(rollConfig);
 `;
 
 const postRollHitDiePatch = `
