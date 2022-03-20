@@ -13,9 +13,9 @@
       "patreon": "ElfFriend_DnD"
     }
   ],
-  "system": [ "dnd5e", "sw5e" ],
+  "system": [ "dnd5e" ],
   "esmodules": [
-    "./setup.js"
+    "./init.js"
   ],
   "dependencies": [
     {
@@ -23,7 +23,7 @@
     }
   ],
   "library": true,
-  "minimumCoreVersion": "0.8.9",
+  "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "url": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e",
   "bugs": "https://github.com/ElfFriend-DnD/foundryvtt-more-hooks-5e/issues",

@@ -1,32 +1,65 @@
-import { MODULE_NAME } from "../const.js";
+import Item5e from '../../../../systems/dnd5e/module/item/entity.js';
+import { AsyncFunction, MODULE_TITLE } from "../const.js";
+import { jankyPatch } from "../util.js";
 
-export function patchRollDamage() {
-  libWrapper.register(MODULE_NAME, 'CONFIG.Item.documentClass.prototype.rollDamage', rollDamagePatch, "WRAPPER");
+const preRollDamagePatch = `
+const finalRollConfig = foundry.utils.mergeObject(rollConfig, options);
+
+if (this instanceof CONFIG.Item.documentClass && !!finalRollConfig) {
+  const allowed = Hooks.call('Item5e.preRollDamage', this, finalRollConfig);
+  if ( allowed === false ) return null;
 }
 
-async function rollDamagePatch(wrapper, config, ...rest) {
-  const result = await wrapper(config, ...rest);
+const roll = await game.dnd5e.dice.damageRoll(finalRollConfig);
 
-  if (!result) return result;
-
-  const item = this;
-  const actor = this.actor;
-
-  Hooks.callAll('Item5e.rollDamage', item, result, config, actor);
-
-  return result;
+if (this instanceof CONFIG.Item.documentClass && roll !== undefined) {
+  Hooks.callAll('Item5e.rollDamage', this, roll);
 }
+
+return roll;
+`;
+
+export function jankyPatchRollDamage() {
+  try {
+    const newFnString = jankyPatch(Item5e.prototype.rollDamage.toString(), {
+      firstLineString: "rollDamage({critical=false, event=null, spellLevel=null, versatile=false, options={}}={}) {\n",
+      regex: /return damageRoll\(foundry.utils.mergeObject\(rollConfig, options\)\);/,
+      patch: preRollDamagePatch,
+    });
+  
+    Item5e.prototype.rollDamage =  new AsyncFunction("{critical=false, event=null, spellLevel=null, versatile=false, options={}}={}", newFnString);
+  } catch(err) {
+    console.error(MODULE_TITLE, '|', `There was an error patching "rollDamage":`, err, 'Original Function was not replaced.');
+  }
+}
+
+// export function patchRollDamage() {
+//   libWrapper.register(MODULE_NAME, 'CONFIG.Item.documentClass.prototype.rollDamage', rollDamagePatch, "WRAPPER");
+// }
+
+// async function rollDamagePatch(wrapper, config, ...rest) {
+//   const result = await wrapper(config, ...rest);
+
+//   if (!result) return result;
+
+//   const item = this;
+//   const actor = this.actor;
+
+//   Hooks.callAll('Item5e.rollDamage', item, result, config, actor);
+
+//   return result;
+// }
+
+/**
+ * A hook event that fires before an Item rolls a Damage Roll. This happens before the Roll Config dialog appears.
+ * @param {Item5e} item       The Item that rolls the Damage Roll
+ * @param {object} rollConfig           Roll config which will be provided to the damageRoll function
+ */
+ function preRollDamage() { }
 
 /**
  * A hook event that fires after an Item rolls a Damage Roll
  * @param {Item5e} item       The Item that rolls the Damage Roll
  * @param {DamageRoll} result           The Result of the Damage Roll
- * @param {object} [config]
- * @param {object} [config.event]    The event which triggered this roll, if any
- * @param {boolean} [config.critical]    Should damage be rolled as a critical hit?
- * @param {number} [config.spellLevel]   If the item is a spell, override the level for damage scaling
- * @param {boolean} [config.versatile]   If the item is a weapon, roll damage using the versatile formula
- * @param {object} [config.options]      Additional options passed to the damageRoll function
- * @param {Actor5e} [actor]       The Actor that owns the item
  */
 function rollDamage() {}
