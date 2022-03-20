@@ -1,4 +1,3 @@
-// import { MODULE_NAME } from "../const.js";
 import Actor5e from '../../../../systems/dnd5e/module/actor/entity.js'
 import { AsyncFunction, MODULE_TITLE } from "../const.js";
 import { jankyPatch } from "../util.js";
@@ -41,23 +40,6 @@ export function jankyPatchRollDeathSave() {
     console.error(MODULE_TITLE, '|', `There was an error patching "rollDeathSave":`, err, 'Original Function was not replaced.');
   }
 }
-
-
-// export function patchRollDeathSave() {
-//   libWrapper.register(MODULE_NAME, 'CONFIG.Actor.documentClass.prototype.rollDeathSave', rollDeathSavePatch, "WRAPPER");
-// }
-
-// async function rollDeathSavePatch(wrapper, options, ...rest) {
-//   const result = await wrapper(options, ...rest);
-
-//   if (!result) return result;
-
-//   const actor = this;
-
-//   Hooks.callAll('Actor5e.rollDeathSave', actor, result, options);
-
-//   return result;
-// }
 
 /**
  * A hook event that fires before an Actor rolls a Death Save
