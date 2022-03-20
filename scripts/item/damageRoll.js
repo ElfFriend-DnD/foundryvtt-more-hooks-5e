@@ -33,23 +33,6 @@ export function jankyPatchRollDamage() {
   }
 }
 
-// export function patchRollDamage() {
-//   libWrapper.register(MODULE_NAME, 'CONFIG.Item.documentClass.prototype.rollDamage', rollDamagePatch, "WRAPPER");
-// }
-
-// async function rollDamagePatch(wrapper, config, ...rest) {
-//   const result = await wrapper(config, ...rest);
-
-//   if (!result) return result;
-
-//   const item = this;
-//   const actor = this.actor;
-
-//   Hooks.callAll('Item5e.rollDamage', item, result, config, actor);
-
-//   return result;
-// }
-
 /**
  * A hook event that fires before an Item rolls a Damage Roll. This happens before the Roll Config dialog appears.
  * @param {Item5e} item       The Item that rolls the Damage Roll
