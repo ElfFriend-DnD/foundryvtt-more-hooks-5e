@@ -2,7 +2,7 @@
   "name": "more-hooks-5e",
   "title": "More Hooks D&D5e",
   "description": "A library module which adds more Hooks for events in the 5e system.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Andrew Krigline",
   "authors": [
     {
@@ -16,11 +16,6 @@
   "system": [ "dnd5e" ],
   "esmodules": [
     "./init.js"
-  ],
-  "dependencies": [
-    {
-      "name": "lib-wrapper"
-    }
   ],
   "library": true,
   "minimumCoreVersion": "9",
