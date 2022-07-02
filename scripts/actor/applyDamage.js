@@ -1,35 +1,52 @@
-import { MODULE_NAME } from "../const.js";
+import Actor5e from '../../../../systems/dnd5e/module/actor/entity.js'
+import { AsyncFunction, MODULE_TITLE } from "../const.js";
+import { jankyPatch } from "../util.js";
 
-export function patchApplyDamage() {
-  libWrapper.register(MODULE_NAME, 'CONFIG.Actor.documentClass.prototype.applyDamage', applyDamagePatch, "WRAPPER");
+
+const preApplyDamagePatch = `
+if (this instanceof CONFIG.Actor.documentClass && amount !== undefined && updates !== undefined) {
+  const canApplyDamage = Hooks.call('Actor5e.preApplyDamage', this, amount, updates);
+  if ( canApplyDamage === false ) return this;
 }
 
-async function applyDamagePatch(wrapper, amount, multiplier, ...rest) {
-  // this is mutated after wrapper is done
-  const prevHp = this.data.data.attributes?.hp;
+if (!allowed) {
+  return this;
+}
 
-  const result = await wrapper(amount, multiplier, ...rest);
+const actorUpdate = await this.update(updates, {dhp: -amount});
 
-  // abort if the wrapper didn't apply damage
-  if (!result) return result;
+if (this instanceof CONFIG.Actor.documentClass && amount !== undefined) {
+  Hooks.callAll('Actor5e.applyDamage', this, -amount);
+}
 
-  const totalDamageTaken = Math.floor(parseInt(amount ?? 0) * (multiplier ?? 1)) * -1;
+return actorUpdate;
+`;
 
-  const newHp = this.data.data.attributes?.hp;
-
-  const actor = this;
-
-  Hooks.callAll('Actor5e.applyDamage', actor, totalDamageTaken, prevHp, newHp);
-
-  return result;
+export function jankyPatchApplyDamage() {
+  try {
+    const newFnString = jankyPatch(Actor5e.prototype.applyDamage.toString(), {
+      firstLineString: "async applyDamage(amount=0, multiplier=1) {\n",
+      regex: /(return allowed !== false \? this.update\(updates, \{dhp: -amount\}\) : this;)/,
+      patch: preApplyDamagePatch,
+    });
+  
+    Actor5e.prototype.applyDamage =  new AsyncFunction("amount=0", "multiplier=1", newFnString);
+  } catch(err) {
+    console.error(MODULE_TITLE, '|', `There was an error patching "applyDamage":`, err, 'Original Function was not replaced.');
+  }
 }
 
 /**
- * A hook event that fires after an Actor takes damage. Note this only fires when the `applyDamage` method is called, not when the actor's HP is updated manually.
+ * A hook event that fires before an Actor takes damage. Note this only fires when the `applyDamage` method is called, not when the actor's HP is updated manually.
  * @param {Actor5e} actor       The Actor that took the damage
+ * @param {number} amount           The total amount of damage the actor took. Informational, does not drive update.
+ * @param {object} updates           The updates about to be made to the actor's hp. This should be mutated to affect the outcome of the damage application.
+ */
+ function preApplyDamage() { }
+
+/**
+ * A hook event that fires after an Actor takes damage. Note this only fires when the `applyDamage` method is called, not when the actor's HP is updated manually.
+ * @param {Actor5e} actor       The Actor after taking damage
  * @param {number} totalDamageTaken           The total amount of damage the actor took
- * @param {object} prevHp           The hp attribute of the Actor before taking damage
- * @param {object} newHp           The hp attribute of the Actor after taking damage
- * 
  */
 function applyDamage() { }
